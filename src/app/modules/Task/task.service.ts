@@ -65,8 +65,6 @@ const getSingleTask = async (id: string) => {
 };
 
 
-
-
 const editTask = async (task_id: string, payload: Partial<ITask>) => {
     const result = await Task.findOneAndUpdate({ _id: task_id }, payload, {
         new: true,

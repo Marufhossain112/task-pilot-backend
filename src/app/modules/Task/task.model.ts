@@ -28,6 +28,11 @@ export const taskSchema = new Schema<ITask, TaskModel>(
             enum: ['Do', 'In Progress', 'Done'],
             default: 'Do'
         },
+        project: {
+            type: Schema.Types.ObjectId,
+            ref: 'Project',
+            required: true,
+        },
     },
     {
         timestamps: true,
