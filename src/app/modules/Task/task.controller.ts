@@ -59,6 +59,16 @@ const editTask = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+const markTaskAsComplete = catchAsync(async (req: Request, res: Response) => {
+    const { task_id } = req.params;
+    const result = await TaskService.markTaskAsComplete(task_id);
+    sendResponse<Partial<ITask>>(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Task marked as complete successfully',
+        data: result,
+    });
+});
 
 const deleteTask = catchAsync(async (req: Request, res: Response) => {
     const { task_id } = req.params;
@@ -79,4 +89,5 @@ export const TaskController = {
     getSingleTask,
     deleteTask,
     editTask,
+    markTaskAsComplete
 };

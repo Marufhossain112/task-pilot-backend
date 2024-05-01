@@ -1,5 +1,8 @@
+import { SortOrder } from "mongoose";
+import { IPaginationOption } from "../../../interfaces/pagination";
 import { IProject } from "./project.interface";
 import { Project } from "./project.model";
+import { paginationHelpers } from "../../../helpers/paginationHelpers";
 
 const createProject = async (project: IProject) => {
     const result = await Project.create(project);
@@ -7,9 +10,29 @@ const createProject = async (project: IProject) => {
 };
 
 const getAllProjects = async (
+    paginationOptions: IPaginationOption
 ) => {
-    const result = await Project.find({});
-    return result;
+    const { page, limit, skip, sortBy, sortOrder } =
+        paginationHelpers.calculatePagination(paginationOptions);
+    const sortItems: { [key: string]: SortOrder } = {};
+    if (sortBy && sortOrder) {
+        sortItems[sortBy] = sortOrder;
+    }
+    const whereConditions = {};
+    const result = await Project.find(whereConditions)
+        .sort(sortItems)
+        .skip(skip)
+        .limit(limit);
+
+    const total = await Project.countDocuments(whereConditions);
+    return {
+        meta: {
+            page,
+            limit,
+            total,
+        },
+        data: result,
+    };
 };
 
 

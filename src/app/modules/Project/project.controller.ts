@@ -4,6 +4,8 @@ import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
 import { ProjectService } from './project.service';
 import { IProject } from './project.interface';
+import pick from '../../../shared/pick';
+import { paginationFields } from '../../../constants/pagination';
 
 const createProject = catchAsync(async (req: Request, res: Response) => {
     const { ...project } = req.body;
@@ -17,13 +19,14 @@ const createProject = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllProjects = catchAsync(async (req: Request, res: Response) => {
-
-    const result = await ProjectService.getAllProjects();
+    const paginationOptions = pick(req.query, paginationFields);
+    const result = await ProjectService.getAllProjects(paginationOptions);
     sendResponse<IProject[]>(res, {
         statusCode: httpStatus.OK,
         success: true,
         message: 'All projects retrieved successfully',
-        data: result,
+        meta: result.meta,
+        data: result.data,
     });
 });
 

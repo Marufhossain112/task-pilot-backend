@@ -71,6 +71,14 @@ const editTask = async (task_id: string, payload: Partial<ITask>) => {
     });
     return result;
 };
+const markTaskAsComplete = async (task_id: string) => {
+    const result = await Task.findOneAndUpdate({ _id: task_id }, {
+        isComplete: true,
+    }, {
+        new: true,
+    });
+    return result;
+};
 
 const deleteTask = async (id: string) => {
     const result = await Task.findOneAndDelete({ _id: id });
@@ -83,4 +91,5 @@ export const TaskService = {
     getSingleTask,
     deleteTask,
     editTask,
+    markTaskAsComplete
 };
