@@ -1,25 +1,42 @@
-import { Model, Types } from "mongoose";
+import { Model } from "mongoose";
 
 export type IUser = {
-  name: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  maidenName: string;
+  age: number;
+  gender: string;
   email: string;
+  phone: string;
+  username: string;
+  password: string;
+  birthDate: string;
+  image: string;
+  bloodGroup: string;
+  height: number;
+  weight: number;
+  eyeColor: string;
+  hair: {
+    color: string;
+    type: string;
+  };
+};
+
+export type ILoginUserResponse = {
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+  token: string;
+};
+
+export type ILoginUser = {
+  username: string;
   password: string;
 };
 
-export type IUserExist = {
-  password: string;
-  email: string;
-  name: string;
-  _id: Types.ObjectId | undefined;
-};
-
-export type UserModel = {
-  isUserExist(
-    email: string
-  ): Promise<Pick<IUserExist, "_id" | "email" | "name" | "password">>;
-
-  isPasswordMatched(
-    givenPassword: string,
-    savedPassword: string
-  ): Promise<boolean>;
-} & Model<IUser>;
+export type UserModel = Model<IUser, Record<string, unknown>>;

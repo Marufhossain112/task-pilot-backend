@@ -1,55 +1,82 @@
 import { Schema, model } from "mongoose";
-import { IUser, IUserExist, UserModel } from "./user.interface";
-import bcrypt from "bcrypt";
-import config from "../../../config";
+import { IUser, UserModel } from "./user.interface";
 
 export const userSchema = new Schema<IUser, UserModel>({
-  name: {
-    type: "string",
-    required: true,
+  id: {
+    type: Number,
+    required: true
+  },
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  maidenName: {
+    type: String,
+    required: true
+  },
+  age: {
+    type: Number,
+    required: true
+  },
+  gender: {
+    type: String,
+    required: true
   },
   email: {
-    type: "string",
-    required: true,
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  username: {
+    type: String,
+    required: true
   },
   password: {
-    type: "string",
-    required: true,
-    select: 0,
+    type: String,
+    required: true
   },
+  birthDate: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  },
+  bloodGroup: {
+    type: String,
+    required: true
+  },
+  height: {
+    type: Number,
+    required: true
+  },
+  weight: {
+    type: Number,
+    required: true
+  },
+  eyeColor: {
+    type: String,
+    required: true
+  },
+  hair: {
+    color: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
+    }
+  }
 });
 
-userSchema.statics.isUserExist = async function (
-  email: string
-): Promise<
-  Partial<Pick<IUserExist, "_id" | "password" | "name" | "email"> | null>
-> {
-  const user = await User.findOne(
-    { email },
-    { email: 1, name: 1, password: 1 }
-  );
-
-  console.log("from login", user);
-  return user;
-};
-
-userSchema.statics.isPasswordMatched = async function (
-  givenPassword: string,
-  savedPassword: string
-): Promise<boolean> {
-  const isMatched = await bcrypt.compare(givenPassword, savedPassword);
-  console.log("pasword.....", isMatched);
-
-  return isMatched;
-};
-
-userSchema.pre("save", async function (next) {
-  ///hasing User Password
-  this.password = await bcrypt.hash(
-    this.password,
-    Number(config.bcrypt_salt_rounds)
-  );
-  next();
-});
 
 export const User = model<IUser, UserModel>("User", userSchema);
