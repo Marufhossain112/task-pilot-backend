@@ -42,8 +42,15 @@ const loginService = async (
 };
 
 
+const getAllUsers = async () => {
+  const whereConditions = {};
+  const result = await User.find(whereConditions);
+  return result;
+};
+
 
 export const UserService = {
   createUserService,
-  loginService
+  loginService,
+  getAllUsers
 };

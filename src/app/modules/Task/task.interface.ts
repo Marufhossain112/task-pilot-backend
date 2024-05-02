@@ -12,10 +12,7 @@ export type ITask = {
 };
 export type TaskModel = Model<ITask, Record<string, unknown>>;
 
-export type ISearchTaskFilters = {
-    searchTerm?: string;
-    title?: string;
-};
+
 export type ITaskFilters = {
     searchTerm?: string;
     title?: string;
@@ -24,6 +21,8 @@ export type ITaskFilters = {
     status?: 'Do' | 'In Progress' | 'Done';
     project?: string;
 };
+export const taskSearchableFilters = [
+    'title'
+];
 
-export const SearchTaskFilters = ['searchTerm', 'title'];
 export const TaskFilters = ['searchTerm', 'title', 'assigned_to', 'due_date', 'status', 'project'];

@@ -1,7 +1,7 @@
 import { SortOrder } from 'mongoose';
 import { paginationHelpers } from '../../../helpers/paginationHelpers';
 import { IPaginationOption } from '../../../interfaces/pagination';
-import { ITask, ITaskFilters, TaskFilters } from './task.interface';
+import { ITask, ITaskFilters, taskSearchableFilters } from './task.interface';
 import { Task } from './task.model';
 
 const createTask = async (task: ITask) => {
@@ -17,7 +17,7 @@ const getAllTasks = async (
     const andConditions = [];
     if (searchTerm) {
         andConditions.push({
-            $or: TaskFilters.map(field => ({
+            $or: taskSearchableFilters.map(field => ({
                 [field]: {
                     $regex: searchTerm,
                     $options: 'i',
