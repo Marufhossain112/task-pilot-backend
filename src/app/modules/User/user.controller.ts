@@ -25,6 +25,7 @@ const createUserController = catchAsync(async (req: Request, res: Response) => {
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   // const { ...userData } = req.body;
   const { ...loginData } = req.body;
+  console.log("login daata",loginData)
   // return;
   const result = await UserService.loginService(loginData);
 

@@ -26,18 +26,20 @@ const loginService = async (
   }
 
 
-  const response = await fetch('https://dummyjson.com/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      username,
-      password,
+  // const response = await fetch('https://dummyjson.com/auth/login', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({
+  //     username,
+  //     password,
+  //   })
+  // });
 
-    })
-  });
-
-  const data = await response.json();
-  return data;
+  // const data = await response.json();
+  // console.log("what's wrong",response)
+  // console.log("what's wrong",data)
+  // return data;
+  return isUserExist;
 
 };
 
